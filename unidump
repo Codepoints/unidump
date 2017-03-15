@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+"""
+hexdump(1) for Unicode data
+"""
+
+import argparse
+import doctest
+import fileinput
+import sys
+import unicodedata
+
+
+__version__ = '1.0'
+
+
+def sanitize_char(char):
+    """replace char with a dot, if it's a control or whitespace char
+
+    Close to what hexdump does, but Unicode-aware. Characters that unicodedata
+    is not aware of will also be replaced with a dot.
+
+    >>> sanitize_char('A')
+    'A'
+    >>> sanitize_char('\U0001F678')
+    '\U0001F678'
+    >>> sanitize_char(' ')
+    '.'
+    >>> sanitize_char('\x01')
+    '.'
+    >>> # un-set Unicode character, should have category "Cn"
+    >>> sanitize_char('\U000D0000')
+    '.'
+    >>> sanitize_char('a1')
+    Traceback (most recent call last):
+        ...
+    TypeError: category() argument must be a unicode character, not str
+    """
+    category = unicodedata.category(char)
+    if category[0] in ('C', 'Z'):
+        return '.'
+    return char
+
+
+def print_line(line, linelength):
+    """
+    >>> print_line([0, ['00A0', '00B0', '00C0'], 'ABC'], 4)
+         0    00A0 00B0 00C0         ABC\n
+    >>> print_line([12, ['00A0', '1F678', '00C0'], 'A\U0001F678C'], 4)
+        12    00A0 1F678 00C0        A\U0001F678C\n
+    """
+    sys.stdout.write(('{:>6}    {:<'+str(linelength*5)+'}   {}\n').format(
+        line[0], ' '.join(line[1]), line[2]
+    ))
+
+
+def fill_and_print_output(current_line, linelength, byteoffset, representation,
+                          char):
+    """
+    >>> current_line = [0, [], '']
+    >>> current_line = fill_and_print_output(current_line, 2, 0, '0076', 'v')
+    >>> current_line == [0, ['0076'], 'v']
+    True
+    >>> current_line = fill_and_print_output(current_line, 2, 1, '0076', 'v')
+    >>> current_line = fill_and_print_output(current_line, 2, 2, '0077', 'w')
+         0    0076 0076    vv\n
+    >>> current_line == [1, ['0077'], 'w']
+    True
+    """
+    if len(current_line[1]) >= linelength:
+        print_line(current_line, linelength)
+        current_line = [byteoffset - 1, [representation], char]
+    else:
+        current_line[1].append(representation)
+        current_line[2] += char
+
+    return current_line
+
+
+def unidump(input, linelength=16, encoding='utf-8'):
+    """take a list of bytes and print their Unicode codepoints
+
+    >>> import io
+    >>> unidump(io.BytesIO(b'\\x01\\xF0\\x9F\\x99\\xB8ABC'), 4)
+         0    0001 1F678 0041 0042   .\U0001F678AB
+         7    0043                   C
+    >>> unidump(io.BytesIO(b'\\xD7'), 4)
+         0    ?D7?                   X
+    >>> unidump(io.BytesIO(b'\\xD7'), 4, encoding='latin1')
+         0    00D7                   \u00D7
+    """
+
+    byteoffset = 0
+    bytebuffer = b''
+    current_line = [0, [], '']
+
+    byte = input.read(1)
+    while byte:
+        byteoffset += 1
+        bytebuffer += byte
+
+        try:
+            char = bytebuffer.decode(encoding)
+        except UnicodeDecodeError:
+            next_byte = input.read(1)
+            if not next_byte or len(bytebuffer) >= 4:
+                for i, x in enumerate(bytebuffer):
+                    current_line = (
+                        fill_and_print_output(current_line, linelength,
+                                            byteoffset - 3 + i,
+                                            '?{:02X}?'.format(x), 'X')
+                    )
+                bytebuffer = b''
+            byte = next_byte
+            continue
+        else:
+            current_line = (
+                fill_and_print_output(current_line, linelength, byteoffset,
+                                      '{:04X}'.format(ord(char)),
+                                      sanitize_char(char))
+            )
+
+        bytebuffer = b''
+        byte = input.read(1)
+
+    print_line(current_line, linelength)
+
+
+def main():
+    description = ('A Unicode codepoint dump. Think of it as hexdump(1) for '
+                   'Unicode.')
+    parser = argparse.ArgumentParser(description=description)
+
+    parser.add_argument('files', nargs='*', metavar='FILE', default=('-',),
+                        help='input files. Use `-\' or keep empty for stdin.')
+    parser.add_argument('-n', '--length', type=int, default=16,
+                        help='format output using this much input characters. '
+                        'Default is %(default)s.')
+    parser.add_argument('-c', '--encoding', type=str, default='utf-8',
+                        help='interpret input in this encoding. Default is '
+                        '%(default)s.')
+    parser.add_argument('-v', '--version', action='version',
+                        version='%(prog)s {}'.format(__version__))
+
+    a = parser.parse_args()
+
+    try:
+        for filename in a.files:
+            if filename == '-':
+                unidump(sys.stdin.buffer, a.length, a.encoding)
+            else:
+                try:
+                    with open(filename, 'rb') as infile:
+                        unidump(infile, a.length, a.encoding)
+                except FileNotFoundError:
+                    sys.stdout.flush()
+                    sys.stderr.write('File {} not found.\n'.format(filename))
+    except KeyboardInterrupt:
+        sys.stdout.flush()
+        # sys.stderr.write('Interrupted\n')
+        sys.exit(1)
+    else:
+        sys.exit(0)
+
+
+if __name__ == '__main__':
+    if '--self-test' in sys.argv:
+        doctest.testmod(verbose=('--verbose' in sys.argv))
+    else:
+        main()
