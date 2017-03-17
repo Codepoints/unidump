@@ -4,8 +4,10 @@
 
 ## Installation
 
-[Download](https://raw.githubusercontent.com/Codepoints/unidump/master/unidump)
-and put it in your path. You need Python 3 installed.
+Install via `pip`:
+
+    # you need Python 3 for unidump
+    pip3 install unidump
 
 ## Usage
 
