@@ -69,7 +69,10 @@ epilog = '''Examples:
 '''
 
 
-def main(args):
+def main(args=None):
+    if args is None:
+        args = sys.argv[1:]
+
     parser = argparse.ArgumentParser(
         prog='unidump',
         description=description,
@@ -110,6 +113,10 @@ def main(args):
                 except FileNotFoundError:
                     sys.stdout.flush()
                     sys.stderr.write('File {} not found.\n'.format(filename))
+                    continue
+                except IsADirectoryError:
+                    sys.stdout.flush()
+                    sys.stderr.write('{} is a directory.\n'.format(filename))
                     continue
             unidump(infile, env=env(linelength=a.linelength, encoding=a.encoding, lineformat=a.lineformat))
     except KeyboardInterrupt:
