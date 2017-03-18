@@ -61,7 +61,7 @@ def fill_and_print(current_line, byteoffset, representation, char, env):
     """
     if len(current_line[1]) >= env.linelength:
         print_line(current_line, env)
-        current_line = [byteoffset - 1, [representation], char]
+        current_line = [byteoffset, [representation], char]
     else:
         current_line[1].append(representation)
         current_line[2] += char

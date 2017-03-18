@@ -40,7 +40,7 @@ def unidump(inbytes, env):
             if not next_byte or len(bytebuffer) >= 4:
                 for i, x in enumerate(bytebuffer):
                     current_line = (
-                        fill_and_print(current_line, byteoffset - 3 + i,
+                        fill_and_print(current_line, byteoffset - 4 + i,
                                        '?{:02X}?'.format(x), 'X', env)
                     )
                 bytebuffer = b''
@@ -48,7 +48,7 @@ def unidump(inbytes, env):
             continue
         else:
             current_line = (
-                fill_and_print(current_line, byteoffset,
+                fill_and_print(current_line, byteoffset - len(bytebuffer),
                                '{:04X}'.format(ord(char)), sanitize_char(char),
                                env)
             )
