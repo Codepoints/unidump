@@ -7,7 +7,7 @@ hexdump(1) for Unicode data
 from unidump.output import sanitize_char, print_line, fill_and_print
 
 
-version = '1.1.0'
+version = '1.1.1'
 
 
 def unidump(inbytes, env):
