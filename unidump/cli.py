@@ -2,6 +2,7 @@ import argparse
 import sys
 from unidump import version, unidump
 from unidump.env import env
+from unicodedata import unidata_version
 
 
 description = '''  A Unicode codepoint dump.
@@ -66,7 +67,9 @@ epilog = '''Examples:
   without byte counter  or rendering of actual data.  You can use this to count
   the total amount of characters  (as opposed to raw bytes)  in a file,  if you
   pipe it through `wc -l`.
-'''
+'''+'''
+This is version {} of unidump, using Unicode {} data.
+'''.format(version, unidata_version)
 
 
 def main(args=None):
@@ -99,7 +102,7 @@ def main(args=None):
                             'See examples below on how to use this option.'
                         ) % env.lineformat.replace('\n', '\\n'))
     parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s {}'.format(version))
+                        version='%(prog)s {} using Unicode {} data'.format(version, unidata_version))
 
     a = parser.parse_args(args)
 
