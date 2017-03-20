@@ -12,7 +12,7 @@ setup(
     name='unidump',
     version=version,
 
-    description='hexdump for your unicode data',
+    description='hexdump for your Unicode data',
     long_description=long_description,
 
     url='https://github.com/Codepoints/unidump',
@@ -28,7 +28,9 @@ setup(
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Debuggers',
         'Topic :: Software Development :: Internationalization',
+        'Topic :: Software Development :: Testing',
         'Topic :: Text Processing :: General',
+        'Topic :: Utilities',
 
         'License :: OSI Approved :: MIT License',
 
@@ -38,7 +40,7 @@ setup(
         'Programming Language :: Python :: 3.5',
     ],
 
-    keywords='unicode hexdump codepoint utility',
+    keywords='unicode hexdump debugging codepoint utility',
 
     packages=['unidump'],
 
@@ -46,5 +48,5 @@ setup(
         'console_scripts': [
             'unidump=unidump.cli:main',
         ],
-    },
+    }
 )
