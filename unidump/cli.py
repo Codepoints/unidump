@@ -1,4 +1,5 @@
 import argparse
+import codecs
 import sys
 from unidump import version, unidump
 from unidump.env import env
@@ -73,6 +74,9 @@ This is version {} of unidump, using Unicode {} data.
 
 
 def main(args=None):
+    # force stdout to be UTF-8 encoded, disregarding locale
+    sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
+
     if args is None:
         args = sys.argv[1:]
 
