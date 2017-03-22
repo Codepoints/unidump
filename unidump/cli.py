@@ -106,7 +106,8 @@ def main(args=None):
                             'See examples below on how to use this option.'
                         ) % env.lineformat.replace('\n', '\\n'))
     parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s {} using Unicode {} data'.format(version, unidata_version))
+                        version='%(prog)s {} using Unicode {} data'.format(
+                            version, unidata_version))
 
     a = parser.parse_args(args)
 
@@ -125,7 +126,8 @@ def main(args=None):
                     sys.stdout.flush()
                     sys.stderr.write('{} is a directory.\n'.format(filename))
                     continue
-            unidump(infile, env=env(linelength=a.linelength, encoding=a.encoding, lineformat=a.lineformat))
+            unidump(infile, env=env(linelength=a.linelength,
+                    encoding=a.encoding, lineformat=a.lineformat))
     except KeyboardInterrupt:
         sys.stdout.flush()
         return 1
