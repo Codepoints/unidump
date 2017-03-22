@@ -6,11 +6,11 @@ from unidump.env import env
 from unicodedata import unidata_version
 
 
-description = '''  A Unicode codepoint dump.
+description = '''  A Unicode code point dump.
 
   Think of it as  hexdump(1)  for Unicode.  The command analyses  the input and
-  prints then three columns:  the raw byte count of the first codepoint in this
-  row,  codepoints in their hex notation,  and finally the raw input characters
+  then prints three columns: the raw byte index of the first code point in this
+  row, code points in their hex notation,  and finally the raw input characters
   with control and whitespace replaced by a dot.
 
   Invalid byte sequences are represented with an “X” and with the hex value en-
@@ -64,7 +64,7 @@ epilog = '''Examples:
 
       unidump -e '{repr}'$'\\n' -n 1 some-file.txt
 
-  This results in  a stream of codepoints in hex notation,  each on a new line,
+  This results in a stream of code points in hex notation,  each on a new line,
   without byte counter  or rendering of actual data.  You can use this to count
   the total amount of characters  (as opposed to raw bytes)  in a file,  if you
   pipe it through `wc -l`.
