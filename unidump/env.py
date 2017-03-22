@@ -11,10 +11,13 @@ class env(object):
 
     output = sys.stdout
 
-    def __init__(self, linelength=None, encoding=None, lineformat=None):
+    def __init__(self, linelength=None, encoding=None, lineformat=None,
+                 output=None):
         if linelength is not None:
             self.linelength = linelength
         if encoding is not None:
             self.encoding = encoding
         if lineformat is not None:
             self.lineformat = lineformat
+        if output is not None:
+            self.output = output

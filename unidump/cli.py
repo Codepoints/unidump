@@ -127,7 +127,8 @@ def main(args=None):
                     sys.stderr.write('{} is a directory.\n'.format(filename))
                     continue
             unidump(infile, env=env(linelength=a.linelength,
-                    encoding=a.encoding, lineformat=a.lineformat))
+                    encoding=a.encoding, lineformat=a.lineformat,
+                    output=sys.stdout))
     except KeyboardInterrupt:
         sys.stdout.flush()
         return 1
