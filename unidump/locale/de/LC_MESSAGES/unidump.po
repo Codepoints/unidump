@@ -1,0 +1,153 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: unidump 1.2.1\n"
+"PO-Revision-Date: 2017-03-22 21:48+0100\n"
+"Last-Translator: Manuel Strehl <boldewyn@gmail.com>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: cli.py:20
+msgid "A Unicode code point dump."
+msgstr "Ein Unicode-Codepunkt-Dump."
+
+#: cli.py:22
+msgid ""
+"Think of it as hexdump(1) for Unicode. The command analyses the input and "
+"then prints three columns: the raw byte index of the first code point in "
+"this row, code points in their hex notation, and finally the raw input "
+"characters with control and whitespace replaced by a dot."
+msgstr ""
+"Denke es dir als hexdump(1) für Unicode. Der Befehl analysiert die Eingabe und "
+"gibt dann drei Spalten aus: die direkte Byte-Position des ersten Codepunkts "
+"in dieser Zeile, Codepunkte in ihrer Hex-Schreibweise und schließlich die "
+"rohen Eingabezeichen, wobei Kontrollzeichen und Leerzeichen durch einen Punkt "
+"ersetzt wurden."
+
+#: cli.py:27
+msgid ""
+"Invalid byte sequences are represented with an “X” and with the hex value "
+"enclosed in question marks, e.g., “?F5?”."
+msgstr ""
+"Ungültige Byte-Sequenzen werden mit einem „X“ dargestellt und mit dem Hex-Wert "
+"in Fragezeichen eingeschlossen, z. B., „?F5?“."
+
+#: cli.py:30
+msgid ""
+"You can pipe in data from stdin, select several files at once, or even mix "
+"all those input methods together."
+msgstr ""
+"Du kannst Daten von stdin einleiten, mehrere Dateien auf einmal auswählen oder "
+"sogar alle diese Eingabemethoden durcheinander verwenden."
+
+#: cli.py:35
+msgid "Examples:"
+msgstr "Beispiele:"
+
+#: cli.py:37
+msgid "* Basic usage with stdin:"
+msgstr "* Normale Nutzung mit stdin:"
+
+#: cli.py:45
+msgid "* Dump the code points translated from another encoding:"
+msgstr "* Gib die Codepunkte übersetzt aus einem anderen Encoding aus:"
+
+#: cli.py:49
+msgid "* Dump many files at the same time:"
+msgstr "* Gib viele Dateien gleichzeitig aus:"
+
+#: cli.py:53
+msgid "* Control characters and whitespace are safely rendered:"
+msgstr "* Kontrollzeichen und Leerzeichen werden sicher dargestellt:"
+
+#: cli.py:58
+msgid "* Finally learn what your favorite Emoji is composed of:"
+msgstr "* Erfahre endlich, aus was dein Lieblings-Emoji zusammengesetzt ist:"
+
+#: cli.py:65
+msgid ""
+"See <http://emojipedia.org/man-elf-medium-skin-tone/> for images. The “elf” "
+"emoji (the first character) is replaced with a dot here, because the current "
+"version of Python’s unicodedata doesn’t know of this character yet."
+msgstr ""
+"Siehe <http://emojipedia.org/man-elf-medium-skin-tone/> für Bilder. Das "
+"„Elfen“-Emoji (das erste Zeichen) ist hier durch einen Punkt ersetzt, weil die "
+"aktuelle Version von Pythons unicodedata dieses Zeichen noch nicht kennt."
+
+#: cli.py:70
+msgid "* Use it like strings(1):"
+msgstr "* Verwende es wie strings(1):"
+
+#: cli.py:74
+msgid ""
+"This will replace every unknown byte from the input file with “X” and every "
+"control and whitespace character with “.”."
+msgstr ""
+"Das ersetzt jedes unbekannte Byte aus der Eingabedatei mit „X“ und jedes "
+"Kontroll- und Leerzeichen mit „.“."
+
+#: cli.py:77
+msgid "* Only print the code points of the input:"
+msgstr "* Gib nur die Codepunkte der Eingabe aus:"
+
+#: cli.py:81
+msgid ""
+"This results in a stream of code points in hex notation, each on a new line, "
+"without byte counter or rendering of actual data. You can use this to count "
+"the total amount of characters (as opposed to raw bytes) in a file, if you "
+"pipe it through `wc -l`."
+msgstr ""
+"Das Ergebnis ist eine Folge von Codepunkten in Hex-Notation, jeder auf einer "
+"eigenen Zeile, ohne Byte-Zähler oder Darstellung der tatsächlichen Daten. Du "
+"kannst das verwenden, um die Gesamtzahl an Zeichen (nicht rohe Bytes) in einer "
+"Datei zu bestimmen, indem du es durch `wc -l` pipest."
+
+#: cli.py:86
+msgid "This is version {} of unidump, using Unicode {} data."
+msgstr "Das ist version {} von unidump mit Unicode-{}-Daten."
+
+#: cli.py:107
+msgid "input files. Use “-” or keep empty for stdin."
+msgstr "Eingabe-Dateien. Verwende „-“ oder lasse es leer für stdin."
+
+#: cli.py:111
+#, python-format
+msgid ""
+"format output using this much input characters. Default is %(default)s "
+"characters."
+msgstr ""
+"formatiere die Ausgabe mit so vielen Eingabe-Zeichen. Vorgabe ist %(default)s "
+"Zeichen."
+
+#: cli.py:116
+#, python-format
+msgid ""
+"interpret input in this encoding. Default is %(default)s. You can choose any "
+"encoding that Python supports, e.g. “latin-1”."
+msgstr ""
+"interpretiere Eingabe in dieser Kodierung. Vorgabe ist %(default)s. Du kannst "
+"jede Kodierung wählen, die Python unterstützt, z. B. „latin-1“."
+
+#: cli.py:122
+#, python-format
+msgid ""
+"specify a custom format in Python’s {} notation. Default is “%s”. See "
+"examples below on how to use this option."
+msgstr ""
+"gib ein eigenes Format in Pythons {}-Schreibweise an. Vorgabe ist „%s“. Siehe "
+"Beispiele weiter unten wie diese Option verwendet wird."
+
+#: cli.py:127
+#, python-format
+msgid "%(prog)s {} using Unicode {} data"
+msgstr "%(prog)s {} mit Unicode-{}-Daten"
+
+#: cli.py:141
+msgid "File {} not found.\n"
+msgstr "Datei {} nicht gefunden.\n"
+
+#: cli.py:146
+msgid "{} is a directory.\n"
+msgstr "{} ist ein Verzeichnis.\n"
