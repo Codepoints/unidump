@@ -3,7 +3,7 @@ all:
 .PHONY: all
 
 dist: test
-	python setup.py sdist bdist_wheel
+	virtualenv/bin/python3 setup.py sdist bdist_wheel
 .PHONY: dist
 
 upload: dist

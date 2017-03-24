@@ -44,6 +44,12 @@ setup(
 
     packages=['unidump'],
 
+    package_data={
+        'unidump': [
+            'locale/de/LC_MESSAGES/unidump.mo',
+        ],
+    },
+
     entry_points={
         'console_scripts': [
             'unidump=unidump.cli:main',
