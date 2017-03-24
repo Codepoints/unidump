@@ -1,7 +1,8 @@
 all:
+	@echo "usage: make (dist|i18n|clean|virtualenv|test)"
 .PHONY: all
 
-deploy:
+deploy: test
 	python setup.py sdist bdist_wheel
 	twine upload dist/*
 .PHONY: deploy
