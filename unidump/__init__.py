@@ -16,13 +16,16 @@ def unidump(inbytes: IO[bytes], env: Env) -> None:
     """take a list of bytes and print their Unicode codepoints
 
     >>> import io
+    >>> import sys
     >>> from unidump.env import Env
-    >>> unidump(io.BytesIO(b'\\x01\\xF0\\x9F\\x99\\xB8ABC'), Env(linelength=4))
+    >>> _env = Env(linelength=4, output=sys.stdout)
+    >>> unidump(io.BytesIO(b'\\x01\\xF0\\x9F\\x99\\xB8ABC'), _env)
           0    0001 1F678 0041 0042    .\U0001F678AB
           7    0043                   C
-    >>> unidump(io.BytesIO(b'\\xD7'), Env(linelength=4))
+    >>> unidump(io.BytesIO(b'\\xD7'), _env)
           0    ?D7?                   X
-    >>> unidump(io.BytesIO(b'\\xD7'), Env(linelength=4, encoding='latin1'))
+    >>> _env.encoding = 'latin1'
+    >>> unidump(io.BytesIO(b'\\xD7'), _env)
           0    00D7                   \u00D7
     """
 

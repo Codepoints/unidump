@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-22 22:24+0100\n"
+"POT-Creation-Date: 2017-03-24 11:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: unidump/cli.py:20
+#: unidump/cli.py:22
 msgid "A Unicode code point dump."
 msgstr ""
 
-#: unidump/cli.py:22
+#: unidump/cli.py:24
 msgid ""
 "Think of it as hexdump(1) for Unicode. The command analyses the input and "
 "then prints three columns: the raw byte index of the first code point in "
@@ -29,64 +29,64 @@ msgid ""
 "characters with control and whitespace replaced by a dot."
 msgstr ""
 
-#: unidump/cli.py:27
+#: unidump/cli.py:29
 msgid ""
 "Invalid byte sequences are represented with an “X” and with the hex value "
 "enclosed in question marks, e.g., “?F5?”."
 msgstr ""
 
-#: unidump/cli.py:30
+#: unidump/cli.py:32
 msgid ""
 "You can pipe in data from stdin, select several files at once, or even mix "
 "all those input methods together."
 msgstr ""
 
-#: unidump/cli.py:35
+#: unidump/cli.py:37
 msgid "Examples:"
 msgstr ""
 
-#: unidump/cli.py:37
+#: unidump/cli.py:39
 msgid "* Basic usage with stdin:"
 msgstr ""
 
-#: unidump/cli.py:45
+#: unidump/cli.py:47
 msgid "* Dump the code points translated from another encoding:"
 msgstr ""
 
-#: unidump/cli.py:49
+#: unidump/cli.py:51
 msgid "* Dump many files at the same time:"
 msgstr ""
 
-#: unidump/cli.py:53
+#: unidump/cli.py:55
 msgid "* Control characters and whitespace are safely rendered:"
 msgstr ""
 
-#: unidump/cli.py:58
+#: unidump/cli.py:60
 msgid "* Finally learn what your favorite Emoji is composed of:"
 msgstr ""
 
-#: unidump/cli.py:65
+#: unidump/cli.py:67
 msgid ""
 "See <http://emojipedia.org/man-elf-medium-skin-tone/> for images. The “elf” "
 "emoji (the first character) is replaced with a dot here, because the current "
 "version of Python’s unicodedata doesn’t know of this character yet."
 msgstr ""
 
-#: unidump/cli.py:70
+#: unidump/cli.py:72
 msgid "* Use it like strings(1):"
 msgstr ""
 
-#: unidump/cli.py:74
+#: unidump/cli.py:76
 msgid ""
 "This will replace every unknown byte from the input file with “X” and every "
 "control and whitespace character with “.”."
 msgstr ""
 
-#: unidump/cli.py:77
+#: unidump/cli.py:79
 msgid "* Only print the code points of the input:"
 msgstr ""
 
-#: unidump/cli.py:81
+#: unidump/cli.py:83
 msgid ""
 "This results in a stream of code points in hex notation, each on a new line, "
 "without byte counter or rendering of actual data. You can use this to count "
@@ -94,44 +94,44 @@ msgid ""
 "pipe it through `wc -l`."
 msgstr ""
 
-#: unidump/cli.py:86
+#: unidump/cli.py:88
 msgid "This is version {} of unidump, using Unicode {} data."
 msgstr ""
 
-#: unidump/cli.py:107
+#: unidump/cli.py:120
 msgid "input files. Use “-” or keep empty for stdin."
 msgstr ""
 
-#: unidump/cli.py:111
+#: unidump/cli.py:124
 #, python-format
 msgid ""
 "format output using this much input characters. Default is %(default)s "
 "characters."
 msgstr ""
 
-#: unidump/cli.py:116
+#: unidump/cli.py:129
 #, python-format
 msgid ""
 "interpret input in this encoding. Default is %(default)s. You can choose any "
 "encoding that Python supports, e.g. “latin-1”."
 msgstr ""
 
-#: unidump/cli.py:122
+#: unidump/cli.py:135
 #, python-format
 msgid ""
 "specify a custom format in Python’s {} notation. Default is “%s”. See "
 "examples below on how to use this option."
 msgstr ""
 
-#: unidump/cli.py:127
+#: unidump/cli.py:140
 #, python-format
 msgid "%(prog)s {} using Unicode {} data"
 msgstr ""
 
-#: unidump/cli.py:141
+#: unidump/cli.py:155
 msgid "File {} not found.\n"
 msgstr ""
 
-#: unidump/cli.py:146
+#: unidump/cli.py:160
 msgid "{} is a directory.\n"
 msgstr ""

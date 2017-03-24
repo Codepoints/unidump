@@ -2,10 +2,13 @@ all:
 	@echo "usage: make (dist|i18n|clean|virtualenv|test)"
 .PHONY: all
 
-deploy: test
+dist: test
 	python setup.py sdist bdist_wheel
+.PHONY: dist
+
+upload: dist
 	twine upload dist/*
-.PHONY: deploy
+.PHONY: upload
 
 i18n: unidump/locale/de/LC_MESSAGES/unidump.mo
 .PHONY: i18n
@@ -31,5 +34,5 @@ virtualenv:
 test:
 	virtualenv/bin/mypy unidump
 	virtualenv/bin/pep8 unidump
-	virtualenv/bin/python3 -m doctest unidump/*.py
+	virtualenv/bin/python3 -m doctest unidump/__init__.py unidump/[a-z]*.py
 .PHONY: test

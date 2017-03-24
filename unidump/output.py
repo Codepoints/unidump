@@ -33,11 +33,12 @@ def sanitize_char(char: str) -> str:
 
 def print_line(line: List, env: Env) -> None:
     """
+    >>> import sys
     >>> from unidump.env import Env
-    >>> print_line([0, ['00A0', '00B0', '00C0'], 'ABC'], Env(linelength=4))
+    >>> _env = Env(linelength=4, output=sys.stdout)
+    >>> print_line([0, ['00A0', '00B0', '00C0'], 'ABC'], _env)
           0    00A0 00B0 00C0         ABC\n
-    >>> print_line([12, ['00A0', '1F678', '00C0'], 'A\U0001F678C'],
-    ...            Env(linelength=4))
+    >>> print_line([12, ['00A0', '1F678', '00C0'], 'A\U0001F678C'], _env)
          12    00A0 1F678 00C0        A\U0001F678C\n
     """
     env.output.write(env.lineformat.format(
@@ -50,8 +51,9 @@ def print_line(line: List, env: Env) -> None:
 def fill_and_print(current_line: List, byteoffset: int, representation: str,
                    char: str, env: Env) -> List:
     """
+    >>> import sys
     >>> from unidump.env import Env
-    >>> _env = Env(linelength=2)
+    >>> _env = Env(linelength=2, output=sys.stdout)
     >>> current_line = [0, [], '']
     >>> current_line = fill_and_print(current_line, 0, '0076', 'v', _env)
     >>> current_line == [0, ['0076'], 'v']
@@ -59,7 +61,7 @@ def fill_and_print(current_line: List, byteoffset: int, representation: str,
     >>> current_line = fill_and_print(current_line, 1, '0076', 'v', _env)
     >>> current_line = fill_and_print(current_line, 2, '0077', 'w', _env)
           0    0076 0076    vv\n
-    >>> current_line == [1, ['0077'], 'w']
+    >>> current_line == [2, ['0077'], 'w']
     True
     """
     if len(current_line[1]) >= env.linelength:
