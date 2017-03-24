@@ -1,7 +1,8 @@
 import sys
+from typing import TextIO
 
 
-class env(object):
+class Env(object):
 
     linelength = 16
 
@@ -11,8 +12,8 @@ class env(object):
 
     output = sys.stdout
 
-    def __init__(self, linelength=None, encoding=None, lineformat=None,
-                 output=None):
+    def __init__(self, linelength: int = None, encoding: str = None,
+                 lineformat: str = None, output: TextIO = None) -> None:
         if linelength is not None:
             self.linelength = linelength
         if encoding is not None:

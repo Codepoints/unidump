@@ -1,7 +1,9 @@
 import unicodedata
+from unidump.env import Env
+from typing import List
 
 
-def sanitize_char(char):
+def sanitize_char(char: str) -> str:
     """replace char with a dot, if it's a control or whitespace char
 
     Close to what hexdump does, but Unicode-aware. Characters that unicodedata
@@ -29,13 +31,13 @@ def sanitize_char(char):
     return char
 
 
-def print_line(line, env):
+def print_line(line: List, env: Env) -> None:
     """
-    >>> from unidump.env import env
-    >>> print_line([0, ['00A0', '00B0', '00C0'], 'ABC'], env(linelength=4))
+    >>> from unidump.env import Env
+    >>> print_line([0, ['00A0', '00B0', '00C0'], 'ABC'], Env(linelength=4))
           0    00A0 00B0 00C0         ABC\n
     >>> print_line([12, ['00A0', '1F678', '00C0'], 'A\U0001F678C'],
-    ...            env(linelength=4))
+    ...            Env(linelength=4))
          12    00A0 1F678 00C0        A\U0001F678C\n
     """
     env.output.write(env.lineformat.format(
@@ -45,10 +47,11 @@ def print_line(line, env):
     ))
 
 
-def fill_and_print(current_line, byteoffset, representation, char, env):
+def fill_and_print(current_line: List, byteoffset: int, representation: str,
+                   char: str, env: Env) -> List:
     """
-    >>> from unidump.env import env
-    >>> _env = env(linelength=2)
+    >>> from unidump.env import Env
+    >>> _env = Env(linelength=2)
     >>> current_line = [0, [], '']
     >>> current_line = fill_and_print(current_line, 0, '0076', 'v', _env)
     >>> current_line == [0, ['0076'], 'v']

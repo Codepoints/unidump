@@ -5,22 +5,24 @@ hexdump(1) for Unicode data
 
 
 from unidump.output import sanitize_char, print_line, fill_and_print
+from unidump.env import Env
+from typing import IO
 
 
 version = '1.1.2'
 
 
-def unidump(inbytes, env):
+def unidump(inbytes: IO[bytes], env: Env) -> None:
     """take a list of bytes and print their Unicode codepoints
 
     >>> import io
-    >>> from unidump.env import env
-    >>> unidump(io.BytesIO(b'\\x01\\xF0\\x9F\\x99\\xB8ABC'), env(linelength=4))
+    >>> from unidump.env import Env
+    >>> unidump(io.BytesIO(b'\\x01\\xF0\\x9F\\x99\\xB8ABC'), Env(linelength=4))
           0    0001 1F678 0041 0042    .\U0001F678AB
           7    0043                   C
-    >>> unidump(io.BytesIO(b'\\xD7'), env(linelength=4))
+    >>> unidump(io.BytesIO(b'\\xD7'), Env(linelength=4))
           0    ?D7?                   X
-    >>> unidump(io.BytesIO(b'\\xD7'), env(linelength=4, encoding='latin1'))
+    >>> unidump(io.BytesIO(b'\\xD7'), Env(linelength=4, encoding='latin1'))
           0    00D7                   \u00D7
     """
 

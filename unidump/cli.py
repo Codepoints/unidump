@@ -2,33 +2,35 @@ import argparse
 import codecs
 import sys
 from unidump import version, unidump
-from unidump.env import env
+from unidump.env import Env
 from unicodedata import unidata_version
 import gettext
 from os.path import dirname
 from textwrap import TextWrapper
 from shutil import get_terminal_size
+from typing import List, IO, Any
 
 
-gettext.install('unidump', localedir=dirname(__file__)+'/locale')
-tw = TextWrapper(width=min(80, get_terminal_size().columns),
-        replace_whitespace=True,
-        initial_indent='  ', subsequent_indent='  ').fill
+tl = gettext.translation('unidump', localedir=dirname(__file__)+'/locale')
+_ = tl.gettext
+tw = TextWrapper(width=min(80, getattr(get_terminal_size(), 'columns')),
+                 replace_whitespace=True,
+                 initial_indent='  ', subsequent_indent='  ').fill
 
 
 description = '\n\n'.join([
   tw(_('A Unicode code point dump.')),
 
   tw(_('Think of it as hexdump(1) for Unicode. The command analyses the input '
-      'and then prints three columns: the raw byte index of the first code point '
-      'in this row, code points in their hex notation, and finally the raw input '
-      'characters with control and whitespace replaced by a dot.')),
+       'and then prints three columns: the raw byte index of the first code '
+       'point in this row, code points in their hex notation, and finally the '
+       'raw input characters with control and whitespace replaced by a dot.')),
 
   tw(_('Invalid byte sequences are represented with an “X” and with the hex '
      'value enclosed in question marks, e.g., “?F5?”.')),
 
   tw(_('You can pipe in data from stdin, select several files at once, or '
-      'even mix all those input methods together.')),
+       'even mix all those input methods together.')),
 ])
 
 epilog = '\n\n'.join([
@@ -84,13 +86,24 @@ epilog = '\n\n'.join([
          'bytes) in a file, if you pipe it through `wc -l`.')),
 
     tw(_('This is version {} of unidump, using Unicode {} data.')
-    .format(version, unidata_version)).lstrip() + '\n'
+       .format(version, unidata_version)).lstrip() + '\n'
 ])
 
 
-def main(args=None):
-    # force stdout to be UTF-8 encoded, disregarding locale
+def force_stdout_to_utf8():
+    """force stdout to be UTF-8 encoded, disregarding locale
+
+    Do not type-check this:
+    error: Incompatible types in assignment (expression has type
+           "StreamWriter", variable has type "TextIO")
+    error: "TextIO" has no attribute "detach"
+    \o/
+    """
     sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
+
+
+def main(args: List[str] = None) -> int:
+    force_stdout_to_utf8()
 
     if args is None:
         args = sys.argv[1:]
@@ -122,7 +135,7 @@ def main(args=None):
                             'specify a custom format in Python’s {} notation. '
                             'Default is “%s”. '
                             'See examples below on how to use this option.'
-                        ) % env.lineformat.replace('\n', '\\n'))
+                        ) % Env.lineformat.replace('\n', '\\n'))
     parser.add_argument('-v', '--version', action='version',
                         version=_('%(prog)s {} using Unicode {} data').format(
                             version, unidata_version))
@@ -131,6 +144,7 @@ def main(args=None):
 
     try:
         for filename in a.files:
+            infile = None  # type: IO[bytes]
             if filename == '-':
                 infile = sys.stdin.buffer
             else:
@@ -146,7 +160,7 @@ def main(args=None):
                     sys.stderr.write(_('{} is a directory.\n')
                                      .format(filename))
                     continue
-            unidump(infile, env=env(linelength=a.linelength,
+            unidump(infile, env=Env(linelength=a.linelength,
                     encoding=a.encoding, lineformat=a.lineformat,
                     output=sys.stdout))
     except KeyboardInterrupt:
