@@ -1,9 +1,11 @@
+VIRTUALENV := virtualenv
+
 all:
 	@echo "usage: make (dist|i18n|clean|virtualenv|test)"
 .PHONY: all
 
-dist: test
-	virtualenv/bin/python3 setup.py sdist bdist_wheel
+dist: virtualenv test
+	"$(VIRTUALENV)"/bin/python3 setup.py sdist bdist_wheel
 .PHONY: dist
 
 upload: dist
@@ -26,13 +28,15 @@ clean:
 	rm -fr unidump.egg-info dist build
 .PHONY: clean
 
-virtualenv:
-	virtualenv -p /usr/bin/python3 virtualenv
-	virtualenv/bin/pip install -r requirements.txt
+virtualenv: $(VIRTUALENV)/bin/python3
 .PHONY: virtualenv
 
-test:
-	virtualenv/bin/mypy unidump
-	virtualenv/bin/pep8 unidump
-	virtualenv/bin/python3 -m doctest unidump/__init__.py unidump/[a-z]*.py
+$(VIRTUALENV)/bin/python3: requirements.txt
+	virtualenv -p /usr/bin/python3 "$(VIRTUALENV)"
+	"$(VIRTUALENV)"/bin/pip install -r requirements.txt
+
+test: virtualenv
+	"$(VIRTUALENV)"/bin/mypy unidump
+	"$(VIRTUALENV)"/bin/pep8 unidump
+	"$(VIRTUALENV)"/bin/python3 -m doctest unidump/__init__.py unidump/[a-z]*.py
 .PHONY: test
