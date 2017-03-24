@@ -21,3 +21,14 @@ unidump/locale/unidump.pot: unidump/cli.py
 clean:
 	rm -fr unidump.egg-info dist build
 .PHONY: clean
+
+virtualenv:
+	virtualenv -p /usr/bin/python3 virtualenv
+	virtualenv/bin/pip install -r requirements.txt
+.PHONY: virtualenv
+
+test:
+	virtualenv/bin/mypy unidump
+	virtualenv/bin/pep8 unidump
+	virtualenv/bin/python3 -m doctest unidump/*.py
+.PHONY: test

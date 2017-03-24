@@ -4,3 +4,4 @@ unidump.egg-info
 /build/
 /dist/
 *~
+/virtualenv
