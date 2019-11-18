@@ -1,7 +1,8 @@
-""""""
+#!/usr/bin/env python3
+"""run unidump as CLI script"""
 
-from unidump.cli import main
 import sys
+from unidump.cli import main
 
 
 if __name__ == '__main__':

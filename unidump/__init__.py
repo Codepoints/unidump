@@ -4,12 +4,13 @@ hexdump(1) for Unicode data
 """
 
 
-from unidump.output import sanitize_char, print_line, fill_and_print
-from unidump.env import Env
 from typing import IO
 
+from unidump.output import sanitize_char, print_line, fill_and_print
+from unidump.env import Env
 
-version = '1.1.2'
+
+VERSION = '1.1.3'
 
 
 def unidump(inbytes: IO[bytes], env: Env) -> None:
@@ -43,10 +44,10 @@ def unidump(inbytes: IO[bytes], env: Env) -> None:
         except UnicodeDecodeError:
             next_byte = inbytes.read(1)
             if not next_byte or len(bytebuffer) >= 4:
-                for i, x in enumerate(bytebuffer):
+                for i, data in enumerate(bytebuffer):
                     current_line = (
                         fill_and_print(current_line, byteoffset - 4 + i,
-                                       '?{:02X}?'.format(x), 'X', env)
+                                       '?{:02X}?'.format(data), 'X', env)
                     )
                 bytebuffer = b''
             byte = next_byte

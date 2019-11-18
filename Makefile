@@ -36,6 +36,7 @@ $(VIRTUALENV)/bin/python3: requirements.txt
 	"$(VIRTUALENV)"/bin/pip install -r requirements.txt
 
 test: virtualenv
+	"$(VIRTUALENV)"/bin/pylint unidump
 	"$(VIRTUALENV)"/bin/mypy unidump
 	"$(VIRTUALENV)"/bin/pep8 unidump
 	"$(VIRTUALENV)"/bin/python3 -m doctest unidump/__init__.py unidump/[a-z]*.py

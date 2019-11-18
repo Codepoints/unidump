@@ -2,15 +2,15 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
-from unidump import version
-from unidump.cli import description, epilog
+from unidump import VERSION
+from unidump.cli import DESCRIPTION, EPILOG
 
 
-long_description = description + '\n\n' + epilog
+long_description = DESCRIPTION + '\n\n' + EPILOG
 
 setup(
     name='unidump',
-    version=version,
+    version=VERSION,
 
     description='hexdump for your Unicode data',
     long_description=long_description,

@@ -1,8 +1,17 @@
+"""
+handle run-time variables
+"""
+
+
 import sys
 from typing import TextIO
 
 
-class Env(object):
+# pylint: disable=too-few-public-methods
+class Env():
+    """
+    helper class, that stores the run-time variables for a call to unidump
+    """
 
     linelength = 16
 

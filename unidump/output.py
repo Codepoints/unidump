@@ -1,6 +1,11 @@
+"""
+handle output of arbitrary Unicode data
+"""
+
 import unicodedata
-from unidump.env import Env
 from typing import List
+
+from unidump.env import Env
 
 
 def sanitize_char(char: str) -> str:
