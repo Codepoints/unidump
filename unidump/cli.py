@@ -11,7 +11,7 @@ from shutil import get_terminal_size
 from typing import List, IO, Any
 
 
-tl = gettext.translation('unidump', localedir=dirname(__file__)+'/locale')
+tl = gettext.translation('unidump', localedir=dirname(__file__)+'/locale', fallback=True)
 _ = tl.gettext
 tw = TextWrapper(width=min(80, getattr(get_terminal_size(), 'columns')),
                  replace_whitespace=True,
