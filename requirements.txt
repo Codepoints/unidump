@@ -1,4 +1,4 @@
-mypy==0.501
-pep8==1.7.0
-pylint==2.4.4
-twine==1.8.1
+mypy==1.6.0
+pep8==1.7.1
+pylint==3.0.1
+twine==4.0.2
