@@ -179,7 +179,7 @@ def main(args: List[str] = None) -> int:
                     encoding=options.encoding,
                     lineformat=options.lineformat,
                     output=sys.stdout))
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, BrokenPipeError):
         sys.stdout.flush()
         return 1
     else:
