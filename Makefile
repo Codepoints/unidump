@@ -38,6 +38,6 @@ $(VIRTUALENV)/bin/python3: requirements.txt
 test: virtualenv
 	"$(VIRTUALENV)"/bin/pylint unidump
 	"$(VIRTUALENV)"/bin/mypy unidump
-	"$(VIRTUALENV)"/bin/pep8 unidump
+	"$(VIRTUALENV)"/bin/pycodestyle unidump
 	"$(VIRTUALENV)"/bin/python3 -m doctest unidump/__init__.py unidump/[a-z]*.py
 .PHONY: test

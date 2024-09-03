@@ -11,7 +11,7 @@ from shutil import get_terminal_size
 import sys
 from textwrap import TextWrapper
 # pylint: disable=unused-import
-from typing import List, IO, Any
+from typing import List, IO, Any, Optional
 # pylint: enable=unused-import
 from unicodedata import unidata_version
 
@@ -112,7 +112,7 @@ def force_stdout_to_utf8():
     sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
 
 
-def main(args: List[str] = None) -> int:
+def main(args: Optional[List[str]] = None) -> int:
     """entry-point for an unidump CLI call"""
 
     force_stdout_to_utf8()
@@ -156,12 +156,15 @@ def main(args: List[str] = None) -> int:
 
     try:
         for filename in options.files:
-            infile = None  # type: IO[bytes]
+            infile = None  # type: Optional[IO[bytes]]
+            needs_close = False
             if filename == '-':
                 infile = sys.stdin.buffer
             else:
+                # pylint: disable=consider-using-with
                 try:
                     infile = open(filename, 'rb')
+                    needs_close = True
                 except FileNotFoundError:
                     sys.stdout.flush()
                     sys.stderr.write(_('File {} not found.\n')
@@ -179,8 +182,9 @@ def main(args: List[str] = None) -> int:
                     encoding=options.encoding,
                     lineformat=options.lineformat,
                     output=sys.stdout))
+            if needs_close:
+                infile.close()
     except (KeyboardInterrupt, BrokenPipeError):
         sys.stdout.flush()
         return 1
-    else:
-        return 0
+    return 0

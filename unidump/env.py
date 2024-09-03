@@ -4,7 +4,7 @@ handle run-time variables
 
 
 import sys
-from typing import TextIO
+from typing import TextIO, Optional
 
 
 # pylint: disable=too-few-public-methods
@@ -21,8 +21,11 @@ class Env():
 
     output = sys.stdout
 
-    def __init__(self, linelength: int = None, encoding: str = None,
-                 lineformat: str = None, output: TextIO = None) -> None:
+    def __init__(self,
+                 linelength: Optional[int] = None,
+                 encoding: Optional[str] = None,
+                 lineformat: Optional[str] = None,
+                 output: Optional[TextIO] = None) -> None:
         if linelength is not None:
             self.linelength = linelength
         if encoding is not None:

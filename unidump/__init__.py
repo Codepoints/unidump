@@ -47,7 +47,7 @@ def unidump(inbytes: IO[bytes], env: Env) -> None:
                 for i, data in enumerate(bytebuffer):
                     current_line = (
                         fill_and_print(current_line, byteoffset - 4 + i,
-                                       '?{:02X}?'.format(data), 'X', env)
+                                       f'?{data:02X}?', 'X', env)
                     )
                 bytebuffer = b''
             byte = next_byte
@@ -55,7 +55,7 @@ def unidump(inbytes: IO[bytes], env: Env) -> None:
         else:
             current_line = (
                 fill_and_print(current_line, byteoffset - len(bytebuffer),
-                               '{:04X}'.format(ord(char)), sanitize_char(char),
+                               f'{ord(char):04X}', sanitize_char(char),
                                env)
             )
 
