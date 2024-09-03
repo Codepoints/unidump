@@ -10,7 +10,7 @@ from unidump.output import sanitize_char, print_line, fill_and_print
 from unidump.env import Env
 
 
-VERSION = '1.1.3'
+VERSION = '1.1.4'
 
 
 def unidump(inbytes: IO[bytes], env: Env) -> None:
