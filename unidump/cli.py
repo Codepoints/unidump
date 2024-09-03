@@ -46,7 +46,7 @@ DESCRIPTION = '\n\n'.join([
 EPILOG = '\n\n'.join([
     _('Examples:'),
 
-    TW(_('* Basic usage with stdin:')),
+    TW(_('* Basic usage with stdin::')),
 
     '''      echo -n 'ABCDEFGHIJKLMNOP' | unidump -n 4
             0    0041 0042 0043 0044    ABCD
@@ -54,39 +54,39 @@ EPILOG = '\n\n'.join([
             8    0049 004A 004B 004C    IJKL
            12    004D 004E 004F 0050    MNOP''',
 
-    TW(_('* Dump the code points translated from another encoding:')),
+    TW(_('* Dump the code points translated from another encoding::')),
 
     '      unidump -c latin-1 some-legacy-file',
 
-    TW(_('* Dump many files at the same time:')),
+    TW(_('* Dump many files at the same time::')),
 
     '      unidump foo-*.txt',
 
-    TW(_('* Control characters and whitespace are safely rendered:')),
+    TW(_('* Control characters and whitespace are safely rendered::')),
 
     '''      echo -n -e '\\x01' | unidump -n 1
            0    0001    .''',
 
-    TW(_('* Finally learn what your favorite Emoji is composed of:')),
+    TW(_('* Finally learn what your favorite Emoji is composed of::')),
 
     '''      ( echo -n -e '\\xf0\\x9f\\xa7\\x9d\\xf0\\x9f\\x8f\\xbd\\xe2' ; \\
         echo -n -e '\\x80\\x8d\\xe2\\x99\\x82\\xef\\xb8\\x8f' ; ) | \\
       unidump -n 5
            0    1F9DD 1F3FD 200D 2642 FE0F    .🏽.♂️''',
 
-    TW(_('See <http://emojipedia.org/man-elf-medium-skin-tone/> for images. '
+    TW(_('See <https://emojipedia.org/man-elf-medium-skin-tone/> for images. '
          'The “elf” emoji (the first character) is replaced with a dot here, '
          'because the current version of Python’s unicodedata doesn’t know of '
          'this character yet.')),
 
-    TW(_('* Use it like strings(1):')),
+    TW(_('* Use it like strings(1)::')),
 
     '      unidump -e \'{data}\' some-file.bin',
 
     TW(_('This will replace every unknown byte from the input file with “X” '
          'and every control and whitespace character with “.”.')),
 
-    TW(_('* Only print the code points of the input:')),
+    TW(_('* Only print the code points of the input::')),
 
     '''      unidump -e '{repr}'$'\\n' -n 1 some-file.txt''',
 
